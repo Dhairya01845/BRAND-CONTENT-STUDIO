@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand Studio | AI Marketing Assistant</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 30px 15px;
+  background: #f4f1fc;
+  color: #25213a;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 720px;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 35px #30205c12;
+}
+
+.logo {
+  color: #7148d5;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+h1 {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #777;
+  line-height: 1.6;
+}
+
+.tag {
+  display: inline-block;
+  background: #eee8ff;
+  color: #6946c8;
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+label {
+  display: block;
+  margin: 18px 0 8px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ded9e9;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  background: white;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #7148d5;
+}
+
+textarea {
+  min-height: 85px;
+  resize: vertical;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 17px;
+  border: none;
+  border-radius: 10px;
+  background: #7148d5;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: .9;
+}
+
+.secondary {
+  background: #25213a;
+}
+
+.reset {
+  background: #eee8ff;
+  color: #6946c8;
+}
+
+#result {
+  display: none;
+  margin-top: 22px;
+  padding: 18px;
+  background: #f5f1ff;
+  border: 1px solid #e6ddff;
+  border-radius: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+}
+
+.footer {
+  text-align: center;
+  color: #999;
+  font-size: 12px;
+  margin-top: 25px;
+}
+
+@media(max-width: 500px) {
+  .container {
+    padding: 20px;
+  }
+  h1 {
+    font-size: 25px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">BRAND STUDIO</div>
+
+<h1>✨ AI Content Assistant</h1>
+
+<p class="subtitle">
+Create marketing prompts for your business.
+Designed for clothing, skincare and product brands.
+</p>
+
+<span class="tag">FREE STARTER TOOL</span>
+
+<label>Brand Name *</label>
+<input id="brand" placeholder="Example: Urban Style">
+
+<label>Product Name *</label>
+<input id="product" placeholder="Example: Oversized T-shirt">
+
+<label>Target Audience *</label>
+<input id="audience" placeholder="Example: College students">
+
+<label>Product Features</label>
+<textarea id="features"
+placeholder="Describe your product and its real features"></textarea>
+
+<label>Content Type</label>
+<select id="type">
+<option>Instagram Caption</option>
+<option>Instagram Reel Script</option>
+<option>Product Description</option>
+<option>Hashtags and Hooks</option>
+<option>Marketing Campaign</option>
+</select>
+
+<label>Writing Style</label>
+<select id="tone">
+<option>Professional</option>
+<option>Friendly</option>
+<option>Luxury</option>
+<option>Creative</option>
+<option>Minimalist</option>
+</select>
+
+<label>Language</label>
+<select id="language">
+<option>English</option>
+<option>Hindi</option>
+<option>Hinglish</option>
+</select>
+
+<button onclick="generate()">✨ Generate AI Prompt</button>
+
+<div id="result"></div>
+
+<button class="secondary" onclick="copyText()">
+Copy Prompt
+</button>
+
+<button class="reset" onclick="resetForm()">
+Reset Form
+</button>
+
+<div class="footer">
+Created with Brand Studio | AI Marketing Assistant
+</div>
+
+</div>
+
+<script>
+function generate() {
+
+ const brand = document.getElementById("brand").value.trim();
+ const product = document.getElementById("product").value.trim();
+ const audience = document.getElementById("audience").value.trim();
+ const features = document.getElementById("features").value.trim();
+ const type = document.getElementById("type").value;
+ const tone = document.getElementById("tone").value;
+ const language = document.getElementById("language").value;
+
+ if (!brand || !product || !audience) {
+   alert("Please complete all required fields.");
+   return;
+ }
+
+ const prompt = `
+Act as an expert digital marketing strategist.
+
+Create ${type} for the following brand.
+
+BRAND: ${brand}
+PRODUCT: ${product}
+AUDIENCE: ${audience}
+FEATURES: ${features || "Not provided"}
+
+STYLE: ${tone}
+LANGUAGE: ${language}
+
+INSTRUCTIONS:
+1. Create original and engaging content.
+2. Make it relevant to the audience.
+3. Write an attractive opening hook.
+4. Include a suitable call to action.
+5. Suggest relevant hashtags when appropriate.
+6. Never invent product claims.
+7. Make the result ready to publish.
+
+Give me professional marketing content.
+`;
+
+ const result = document.getElementById("result");
+ result.textContent = prompt;
+ result.style.display = "block";
+ result.scrollIntoView({behavior: "smooth", block: "nearest"});
+}
+
+function copyText() {
+ const result = document.getElementById("result");
+
+ if (!result.textContent.trim()) {
+   alert("Generate a prompt first!");
+   return;
+ }
+
+ navigator.clipboard.writeText(result.textContent)
+ .then(() => alert("Prompt copied! Paste it into Claude."))
+ .catch(() => alert("Please select and copy the prompt manually."));
+}
+
+function resetForm() {
+ document.querySelectorAll("input, textarea").forEach(el => el.value = "");
+ document.getElementById("type").selectedIndex = 0;
+ document.getElementById("tone").selectedIndex = 0;
+ document.getElementById("language").selectedIndex = 0;
+ document.getElementById("result").style.display = "none";
+}
+</script>
+
+</body>
+</html>
